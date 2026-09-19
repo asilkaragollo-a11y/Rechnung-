@@ -2,202 +2,292 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coin & Aktien Rechner</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
+<title>Coin Rechner</title>
+
+<style>
     * {
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
     }
 
     body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #f2f2f7;
-      padding: 20px;
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f2f2f7;
+        padding: 20px;
     }
 
-    .calculator {
-      width: 100%;
-      max-width: 420px;
-      background: white;
-      padding: 30px;
-      border-radius: 25px;
-      box-shadow: 0 10px 35px rgba(0,0,0,0.12);
+    .box {
+        width: 100%;
+        max-width: 430px;
+        background: white;
+        padding: 28px;
+        border-radius: 24px;
+        box-shadow: 0 10px 35px rgba(0,0,0,0.12);
     }
 
     h1 {
-      text-align: center;
-      margin-bottom: 8px;
+        text-align: center;
+        margin: 0;
+        font-size: 28px;
     }
 
     .subtitle {
-      text-align: center;
-      color: #777;
-      margin-bottom: 30px;
+        text-align: center;
+        color: #777;
+        margin: 8px 0 25px;
     }
 
     label {
-      display: block;
-      font-weight: bold;
-      margin: 18px 0 8px;
+        display: block;
+        font-weight: bold;
+        margin-top: 18px;
+        margin-bottom: 8px;
     }
 
     input {
-      width: 100%;
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      font-size: 18px;
-      outline: none;
+        width: 100%;
+        padding: 15px;
+        border: 1px solid #d5d5d5;
+        border-radius: 12px;
+        font-size: 18px;
+        outline: none;
     }
 
     input:focus {
-      border-color: #007aff;
+        border-color: #007aff;
     }
 
     button {
-      width: 100%;
-      margin-top: 25px;
-      padding: 16px;
-      border: none;
-      border-radius: 14px;
-      background: #007aff;
-      color: white;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
+        width: 100%;
+        margin-top: 24px;
+        padding: 16px;
+        border: none;
+        border-radius: 14px;
+        background: #007aff;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
     }
 
-    button:hover {
-      opacity: 0.9;
-    }
-
-    .result {
-      margin-top: 25px;
-      padding: 20px;
-      background: #f2f2f7;
-      border-radius: 16px;
-      display: none;
-    }
-
-    .result-title {
-      font-weight: bold;
-      margin-bottom: 12px;
-    }
-
-    .calculation {
-      font-size: 18px;
-      line-height: 1.6;
-      word-break: break-word;
-    }
-
-    .amount {
-      font-size: 28px;
-      font-weight: bold;
-      margin-top: 12px;
+    button:active {
+        transform: scale(0.98);
     }
 
     .error {
-      color: #d00;
-      margin-top: 15px;
-      display: none;
-      text-align: center;
+        display: none;
+        color: #d00000;
+        text-align: center;
+        margin-top: 15px;
     }
-  </style>
+
+    .result {
+        display: none;
+        margin-top: 25px;
+        background: #f2f2f7;
+        border-radius: 18px;
+        padding: 20px;
+    }
+
+    .result h2 {
+        margin-top: 0;
+        font-size: 21px;
+    }
+
+    .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        padding: 9px 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .row:last-of-type {
+        border-bottom: none;
+    }
+
+    .value {
+        font-weight: bold;
+        text-align: right;
+    }
+
+    .coins {
+        font-size: 25px;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+
+    .formula {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #ddd;
+        color: #555;
+        word-break: break-word;
+    }
+</style>
 </head>
 
 <body>
 
-  <div class="calculator">
+<div class="box">
 
-    <h1>💰 Rechner</h1>
-    <div class="subtitle">Coins oder Aktien berechnen</div>
+    <h1>🪙 Coin-Rechner</h1>
 
-    <label for="price">Preis pro Coin / Aktie (€)</label>
+    <div class="subtitle">
+        Wie viele Coins bekommst du?
+    </div>
+
+    <label>Preis pro Coin (€)</label>
+
     <input
-      id="price"
-      type="text"
-      inputmode="decimal"
-      placeholder="z. B. 0,008"
+        id="price"
+        type="text"
+        inputmode="decimal"
+        placeholder="z. B. 0,00878"
     >
 
-    <label for="investment">Wie viel Geld möchtest du investieren? (€)</label>
+    <label>Wie viel Geld investierst du? (€)</label>
+
     <input
-      id="investment"
-      type="text"
-      inputmode="decimal"
-      placeholder="z. B. 10"
+        id="money"
+        type="text"
+        inputmode="decimal"
+        placeholder="z. B. 10"
     >
 
-    <button onclick="calculate()">Berechnen</button>
+    <button onclick="calculate()">
+        Berechnen
+    </button>
 
     <div class="error" id="error">
-      Bitte gib gültige Zahlen ein.
+        Bitte gib gültige Zahlen ein.
     </div>
 
     <div class="result" id="result">
-      <div class="result-title">Deine Rechnung:</div>
 
-      <div class="calculation" id="calculation"></div>
+        <h2>Zusammenfassung</h2>
 
-      <div class="amount" id="amount"></div>
+        <div class="row">
+            <span>💰 Preis pro Coin</span>
+            <span class="value" id="priceResult"></span>
+        </div>
+
+        <div class="row">
+            <span>💵 Einsatz</span>
+            <span class="value" id="moneyResult"></span>
+        </div>
+
+        <div class="coins">
+            🪙 Du kaufst: <span id="coinResult"></span> Coins
+        </div>
+
+        <div class="formula" id="formula"></div>
+
     </div>
 
-  </div>
+</div>
 
-  <script>
-    function toNumber(value) {
-      // Komma in Punkt umwandeln
-      return parseFloat(value.replace(",", "."));
-    }
 
-    function formatNumber(number) {
-      return new Intl.NumberFormat("de-DE", {
+<script>
+
+function getNumber(value) {
+
+    // Komma und Punkt werden akzeptiert
+    value = value.replace(",", ".");
+
+    return Number(value);
+}
+
+
+function formatEuro(number) {
+
+    return number.toLocaleString("de-DE", {
+        minimumFractionDigits: 2,
         maximumFractionDigits: 12
-      }).format(number);
-    }
+    }) + " €";
 
-    function calculate() {
+}
 
-      const priceInput = document.getElementById("price").value.trim();
-      const investmentInput = document.getElementById("investment").value.trim();
 
-      const price = toNumber(priceInput);
-      const investment = toNumber(investmentInput);
+function formatCoins(number) {
 
-      const error = document.getElementById("error");
-      const result = document.getElementById("result");
+    // Immer genau 2 Nachkommastellen
+    return number.toLocaleString("de-DE", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
 
-      if (
-        !isFinite(price) ||
-        !isFinite(investment) ||
+}
+
+
+function calculate() {
+
+    const priceText =
+        document.getElementById("price").value.trim();
+
+    const moneyText =
+        document.getElementById("money").value.trim();
+
+
+    const price = getNumber(priceText);
+    const money = getNumber(moneyText);
+
+
+    const error =
+        document.getElementById("error");
+
+    const result =
+        document.getElementById("result");
+
+
+    // Prüfen, ob die Eingaben gültig sind
+    if (
+        !Number.isFinite(price) ||
+        !Number.isFinite(money) ||
         price <= 0 ||
-        investment <= 0
-      ) {
+        money <= 0
+    ) {
+
         error.style.display = "block";
         result.style.display = "none";
+
         return;
-      }
-
-      error.style.display = "none";
-
-      const quantity = investment / price;
-
-      document.getElementById("calculation").innerHTML =
-        `${formatNumber(investment)} € ÷ ${formatNumber(price)} €`;
-
-      document.getElementById("amount").innerHTML =
-        `${formatNumber(quantity)} Stück`;
-
-      result.style.display = "block";
     }
-  </script>
+
+
+    error.style.display = "none";
+
+
+    // Rechnung
+    const coins = money / price;
+
+
+    // Ergebnisse anzeigen
+    document.getElementById("priceResult").textContent =
+        formatEuro(price);
+
+    document.getElementById("moneyResult").textContent =
+        formatEuro(money);
+
+    document.getElementById("coinResult").textContent =
+        formatCoins(coins);
+
+
+    document.getElementById("formula").textContent =
+        `${formatEuro(money)} ÷ ${formatEuro(price)} = ${formatCoins(coins)} Coins`;
+
+
+    result.style.display = "block";
+}
+
+</script>
 
 </body>
 </html>
